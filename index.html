@@ -560,52 +560,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =============================================
-     RANDOMIZE PLAYER POSITIONS
+     LOAD POSITIONS FROM TRAIL 1
      ============================================= */
 
-  function randomizePositions() {
+  function loadPositionsFromTrial1() {
 
-    const shuffledPositions =
-      shuffle(aiPositions);
+  const savedPositions =
+    sessionStorage.getItem("CyberCatchPlayerPositions");
 
-
-    aiPlayers.forEach(
-      (playerID, index) => {
-
-        const position =
-          shuffledPositions[index];
-
-
-        const wrapper =
-          document.getElementById(
-            `wrapper-${playerID}`
-          );
-
-
-        wrapper.style.left =
-          `${position.left}px`;
-
-
-        wrapper.style.top =
-          `${position.top}px`;
-
-
-        playerPosition[playerID] =
-          position.name;
-
-      }
-    );
-
+  if (!savedPositions) {
+    console.error("No saved positions found from Trial 1.");
+    return;
   }
+
+  const positions = JSON.parse(savedPositions);
+
+  aiPlayers.forEach(playerID => {
+
+    const position = positions[playerID];
+
+    const wrapper =
+      document.getElementById(`wrapper-${playerID}`);
+
+    if (wrapper && position) {
+      wrapper.style.left = `${position.left}px`;
+      wrapper.style.top = `${position.top}px`;
+
+      playerPosition[playerID] = position.name;
+    }
+  });
+}
 
 
   /* =============================================
-     RANDOMIZE EVERYTHING ON PAGE LOAD
+     RANDOMIZE STATUS AND LOAD POSITIONS ON PAGE LOAD
      ============================================= */
 
   randomizeStatuses();
 
-  randomizePositions();
+  loadPositionsFromTrial1();
 
 
   /* =============================================
