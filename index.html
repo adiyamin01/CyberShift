@@ -565,8 +565,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadPositionsFromTrial1() {
 
-  const savedPositions =
-    sessionStorage.getItem("CyberCatchPlayerPositions");
+  const params = new URLSearchParams(window.location.search);
+  const savedPositions = params.get("positions");
 
   if (!savedPositions) {
     console.error("No saved positions found from Trial 1.");
