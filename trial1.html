@@ -187,6 +187,11 @@ function randomizeAndSavePositions() {
     JSON.stringify(assignment)
   );
 
+  window.parent.postMessage({
+  type: "CyberCatchPositions",
+  positions: JSON.stringify(assignment)
+}, "*");
+  
   console.log(
     "Trial 1 randomized positions:",
     assignment
